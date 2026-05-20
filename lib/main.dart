@@ -38,7 +38,7 @@ Future<void> main() async {
 }
 
 final ipLocationFutureProvider = FutureProvider((ref) async {
-  final ip = ref.watch(frameProvider.select((value) => value.sessionip));
+  final ip = ref.watch(frameProvider.select((value) => value?.sessionip ?? ''));
   if (ip != '') {
     return await getIPAPI(ip);
   } else {

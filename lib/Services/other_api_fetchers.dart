@@ -4,8 +4,8 @@ import 'package:http/http.dart' as http;
 
 Future<Map<String, dynamic>> getIPAPI(String ip) async {
   print('Fetching from Ignite ip-api');
-  if (ip == null || ip == "") {
-    return null;
+  if (ip == "") {
+    return <String, dynamic>{};
   }
   final response =
       await http.get(Uri.http('api.ignitevr.gg', 'ip_geolocation/$ip'));

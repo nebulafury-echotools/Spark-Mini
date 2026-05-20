@@ -13,7 +13,7 @@ class MatchRulesPage extends ConsumerStatefulWidget {
 }
 
 class MatchRulesPageState extends ConsumerState<MatchRulesPage> {
-  Map<String, dynamic> matchRulesPresets;
+  Map<String, dynamic>? matchRulesPresets;
   bool fetchingPresets = false;
 
   @override
@@ -65,8 +65,9 @@ class MatchRulesPageState extends ConsumerState<MatchRulesPage> {
                       Icon(Icons.arrow_upward),
                     ]),
                     style: ElevatedButton.styleFrom(
-                      primary: Theme.of(context).colorScheme.primaryContainer,
-                      onPrimary:
+                      backgroundColor:
+                          Theme.of(context).colorScheme.primaryContainer,
+                      foregroundColor:
                           Theme.of(context).colorScheme.onPrimaryContainer,
                       padding: EdgeInsets.all(14),
                     ),
@@ -83,8 +84,9 @@ class MatchRulesPageState extends ConsumerState<MatchRulesPage> {
                       Icon(Icons.pause),
                     ]),
                     style: ElevatedButton.styleFrom(
-                      primary: Theme.of(context).colorScheme.primaryContainer,
-                      onPrimary:
+                      backgroundColor:
+                          Theme.of(context).colorScheme.primaryContainer,
+                      foregroundColor:
                           Theme.of(context).colorScheme.onPrimaryContainer,
                       padding: EdgeInsets.all(14),
                     ),
@@ -101,8 +103,9 @@ class MatchRulesPageState extends ConsumerState<MatchRulesPage> {
                       Icon(Icons.restart_alt),
                     ]),
                     style: ElevatedButton.styleFrom(
-                      primary: Theme.of(context).colorScheme.primaryContainer,
-                      onPrimary:
+                      backgroundColor:
+                          Theme.of(context).colorScheme.primaryContainer,
+                      foregroundColor:
                           Theme.of(context).colorScheme.onPrimaryContainer,
                       padding: EdgeInsets.all(14),
                     ),
@@ -117,7 +120,7 @@ class MatchRulesPageState extends ConsumerState<MatchRulesPage> {
             child: Center(
                 child: Text(
               (() {
-                if (inGame && private_match != null && private_match) {
+                if (inGame && private_match) {
                   return "Rules last changed by: ${rules_changed_by}";
                 } else {
                   return "Not in private match.";
@@ -129,14 +132,16 @@ class MatchRulesPageState extends ConsumerState<MatchRulesPage> {
             margin: EdgeInsets.all(20),
           ),
           (() {
-            if (matchRulesPresets != null) {
+            final presetsResponse = matchRulesPresets;
+            if (presetsResponse != null) {
               var presets = <MapEntry<String, Map<String, dynamic>>>[];
-              for (var i = 0; i < matchRulesPresets.values.length; i++) {
+              for (var i = 0; i < presetsResponse.values.length; i++) {
                 var map = new MapEntry<String, Map<String, dynamic>>(
-                    matchRulesPresets.keys.toList()[i],
-                    matchRulesPresets.values.toList()[i]);
+                    presetsResponse.keys.toList()[i],
+                    Map<String, dynamic>.from(
+                        presetsResponse.values.toList()[i]));
                 presets.add(map);
-                print(matchRulesPresets.keys.toList()[i]);
+                print(presetsResponse.keys.toList()[i]);
               }
               return Column(
                 children: presets
@@ -144,10 +149,10 @@ class MatchRulesPageState extends ConsumerState<MatchRulesPage> {
                         margin: EdgeInsets.all(8),
                         child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              primary: Theme.of(context)
+                              backgroundColor: Theme.of(context)
                                   .colorScheme
                                   .primaryContainer,
-                              onPrimary: Theme.of(context)
+                              foregroundColor: Theme.of(context)
                                   .colorScheme
                                   .onPrimaryContainer,
                               // primary: Colors.red,
@@ -198,7 +203,8 @@ class MatchRulesPageState extends ConsumerState<MatchRulesPage> {
       // then parse the JSON.
       if (!mounted) return;
       setState(() {
-        matchRulesPresets = jsonDecode(response.body);
+        matchRulesPresets =
+            Map<String, dynamic>.from(jsonDecode(response.body));
         fetchingPresets = false;
       });
     } else {

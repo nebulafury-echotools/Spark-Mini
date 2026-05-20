@@ -32,25 +32,22 @@ class FrameFetcher extends StateNotifier<APIFrame?> {
     try {
       final response = await http
           .get(Uri.http('$echoVRIP:$echoVRPort', 'session'))
-          .timeout(const Duration(seconds: 1))
-          .onError((error, stackTrace) => null);
-      if (response != null) {
-        if (response.statusCode == 200 || response.statusCode == 500) {
-          // If the server did return a 200 OK response,
-          // then parse the JSON.
-          try {
-            var newFrame = APIFrame.fromJson(jsonDecode(response.body));
+          .timeout(const Duration(seconds: 1));
+      if (response.statusCode == 200 || response.statusCode == 500) {
+        // If the server did return a 200 OK response,
+        // then parse the JSON.
+        try {
+          var newFrame = APIFrame.fromJson(jsonDecode(response.body));
 
-            return newFrame;
-          } catch (e) {
-            print(e);
-            return null;
-          }
-        } else if (response.statusCode == 404) {
-          // var newFrame = APIFrame();
-          // newFrame.err_code = -7;
-          // return newFrame;
+          return newFrame;
+        } catch (e) {
+          print(e);
+          return null;
         }
+      } else if (response.statusCode == 404) {
+        // var newFrame = APIFrame();
+        // newFrame.err_code = -7;
+        // return newFrame;
       }
     } catch (e) {
       print(e);

@@ -112,6 +112,7 @@ class DashboardWidgetState extends ConsumerState<DashboardWidget> {
                         ]),
                   );
                 }
+                return Container();
               } else {
                 // in game
                 return Column(children: <Widget>[

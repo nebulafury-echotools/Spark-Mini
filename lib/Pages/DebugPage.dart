@@ -16,13 +16,13 @@ class DebugPage extends StatefulWidget {
 }
 
 class DebugPageState extends State<DebugPage> {
-  String wifiName;
-  String wifiBSSID;
-  String wifiIP;
-  String wifiIPv6;
-  String wifiSubmask;
-  String wifiBroadcast;
-  String wifiGateway;
+  String wifiName = '';
+  String wifiBSSID = '';
+  String wifiIP = '';
+  String wifiIPv6 = '';
+  String wifiSubmask = '';
+  String wifiBroadcast = '';
+  String wifiGateway = '';
 
   String _connectionStatus = 'Unknown';
   final NetworkInfo _networkInfo = NetworkInfo();
@@ -55,7 +55,7 @@ class DebugPageState extends State<DebugPage> {
                 .map<Container>((s) => Container(
                       child: Center(
                           child: Text(
-                        s ?? "---",
+                        s,
                         textScaleFactor: 1.3,
                         textAlign: TextAlign.center,
                       )),
@@ -91,13 +91,13 @@ class DebugPageState extends State<DebugPage> {
   }
 
   Future<void> _initNetworkInfo() async {
-    String wifiName,
-        wifiBSSID,
-        wifiIPv4,
-        wifiIPv6,
-        wifiGatewayIP,
-        wifiBroadcast,
-        wifiSubmask;
+    String wifiName = '',
+        wifiBSSID = '',
+        wifiIPv4 = '',
+        wifiIPv6 = '',
+        wifiGatewayIP = '',
+        wifiBroadcast = '',
+        wifiSubmask = '';
 
     try {
       if (!kIsWeb && Platform.isIOS) {
@@ -107,12 +107,12 @@ class DebugPageState extends State<DebugPage> {
         }
         if (status == LocationAuthorizationStatus.authorizedAlways ||
             status == LocationAuthorizationStatus.authorizedWhenInUse) {
-          wifiName = await _networkInfo.getWifiName();
+          wifiName = await _networkInfo.getWifiName() ?? '';
         } else {
-          wifiName = await _networkInfo.getWifiName();
+          wifiName = await _networkInfo.getWifiName() ?? '';
         }
       } else {
-        wifiName = await _networkInfo.getWifiName();
+        wifiName = await _networkInfo.getWifiName() ?? '';
       }
     } on PlatformException catch (e) {
       developer.log('Failed to get Wifi Name', error: e);
@@ -127,12 +127,12 @@ class DebugPageState extends State<DebugPage> {
         }
         if (status == LocationAuthorizationStatus.authorizedAlways ||
             status == LocationAuthorizationStatus.authorizedWhenInUse) {
-          wifiBSSID = await _networkInfo.getWifiBSSID();
+          wifiBSSID = await _networkInfo.getWifiBSSID() ?? '';
         } else {
-          wifiBSSID = await _networkInfo.getWifiBSSID();
+          wifiBSSID = await _networkInfo.getWifiBSSID() ?? '';
         }
       } else {
-        wifiBSSID = await _networkInfo.getWifiBSSID();
+        wifiBSSID = await _networkInfo.getWifiBSSID() ?? '';
       }
     } on PlatformException catch (e) {
       developer.log('Failed to get Wifi BSSID', error: e);
@@ -140,42 +140,42 @@ class DebugPageState extends State<DebugPage> {
     }
 
     try {
-      wifiIPv4 = await _networkInfo.getWifiIP();
+      wifiIPv4 = await _networkInfo.getWifiIP() ?? '';
     } on PlatformException catch (e) {
       developer.log('Failed to get Wifi IPv4', error: e);
       wifiIPv4 = 'Failed to get Wifi IPv4';
     }
 
     try {
-      wifiIPv6 = await _networkInfo.getWifiIPv6();
+      wifiIPv6 = await _networkInfo.getWifiIPv6() ?? '';
     } on PlatformException catch (e) {
       developer.log('Failed to get Wifi IPv6', error: e);
       wifiIPv6 = 'Failed to get Wifi IPv6';
     }
 
     try {
-      wifiSubmask = await _networkInfo.getWifiSubmask();
+      wifiSubmask = await _networkInfo.getWifiSubmask() ?? '';
     } on PlatformException catch (e) {
       developer.log('Failed to get Wifi submask address', error: e);
       wifiSubmask = 'Failed to get Wifi submask address';
     }
 
     try {
-      wifiBroadcast = await _networkInfo.getWifiBroadcast();
+      wifiBroadcast = await _networkInfo.getWifiBroadcast() ?? '';
     } on PlatformException catch (e) {
       developer.log('Failed to get Wifi broadcast', error: e);
       wifiBroadcast = 'Failed to get Wifi broadcast';
     }
 
     try {
-      wifiGatewayIP = await _networkInfo.getWifiGatewayIP();
+      wifiGatewayIP = await _networkInfo.getWifiGatewayIP() ?? '';
     } on PlatformException catch (e) {
       developer.log('Failed to get Wifi gateway address', error: e);
       wifiGatewayIP = 'Failed to get Wifi gateway address';
     }
 
     try {
-      wifiSubmask = await _networkInfo.getWifiSubmask();
+      wifiSubmask = await _networkInfo.getWifiSubmask() ?? '';
     } on PlatformException catch (e) {
       developer.log('Failed to get Wifi submask', error: e);
       wifiSubmask = 'Failed to get Wifi submask';

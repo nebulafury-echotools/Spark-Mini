@@ -1,11 +1,11 @@
 String getFormattedLink(
-    String sessionid,
+    String? sessionid,
     bool angleBrackets,
     int linkType,
     bool appendTeamNames,
     Map<String, dynamic> orangeVRMLTeamInfo,
     Map<String, dynamic> blueVRMLTeamInfo) {
-  if (sessionid == null) sessionid = '**********************';
+  sessionid ??= '**********************';
 
   String link = "";
 
@@ -38,13 +38,11 @@ String getFormattedLink(
   if (appendTeamNames) {
     String orangeName = '?';
     String blueName = '?';
-    if (orangeVRMLTeamInfo != null &&
-        orangeVRMLTeamInfo.containsKey('team_name') &&
+    if (orangeVRMLTeamInfo.containsKey('team_name') &&
         orangeVRMLTeamInfo['team_name'] != '') {
       orangeName = orangeVRMLTeamInfo['team_name'];
     }
-    if (blueVRMLTeamInfo != null &&
-        blueVRMLTeamInfo.containsKey('team_name') &&
+    if (blueVRMLTeamInfo.containsKey('team_name') &&
         blueVRMLTeamInfo['team_name'] != '') {
       blueName = blueVRMLTeamInfo['team_name'];
     }
