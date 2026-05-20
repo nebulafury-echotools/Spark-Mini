@@ -36,6 +36,7 @@ class ShareWidgetState extends ConsumerState<ShareWidget> {
     final bool inGame = ref.watch(inGameProvider);
     final echoVRIP = ref.watch(echoVRIPProvider);
     final echoVRPort = ref.watch(echoVRPortProvider);
+    final settings = ref.watch(sharedPreferencesProvider);
     final Map<String, dynamic> ipLocation =
         ref.watch(ipLocationResponseProvider);
 
@@ -157,7 +158,10 @@ class ShareWidgetState extends ConsumerState<ShareWidget> {
                                           0,
                                           true,
                                           match['blue_team_info'],
-                                          match['orange_team_info']);
+                                          match['orange_team_info'],
+                                          settings.getBool(
+                                                  'linkEchoTaxiPrefix') ??
+                                              false);
                                       Clipboard.setData(
                                           new ClipboardData(text: link));
                                       final snackBar =
@@ -190,7 +194,10 @@ class ShareWidgetState extends ConsumerState<ShareWidget> {
                                           0,
                                           true,
                                           match['blue_team_info'],
-                                          match['orange_team_info']);
+                                          match['orange_team_info'],
+                                          settings.getBool(
+                                                  'linkEchoTaxiPrefix') ??
+                                              false);
 
                                       Navigator.push(
                                         context,

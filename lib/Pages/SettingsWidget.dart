@@ -171,6 +171,26 @@ class SettingsWidget extends ConsumerWidget {
                     ),
                   ],
                 ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: ListTile(
+                        title: Text("Echo Taxi compatibility"),
+                        subtitle: Text("Prefix links with https://echo.taxi/"),
+                      ),
+                    ),
+                    Switch(
+                      value: settings.getBool('linkEchoTaxiPrefix') ?? false,
+                      onChanged: (bool value) {
+                        settings.setBool('linkEchoTaxiPrefix', value);
+                        ref.refresh(sharedPreferencesProvider);
+                      },
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                  ],
+                ),
                 SizedBox(
                   height: 10,
                 ),

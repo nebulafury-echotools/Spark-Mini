@@ -134,6 +134,7 @@ final sparkLinkProvider = StateProvider<String>((ref) {
       prefs.getBool('linkAppendTeamNames') ?? false,
       orange,
       blue,
+      prefs.getBool('linkEchoTaxiPrefix') ?? false,
     );
   } else {
     return "";

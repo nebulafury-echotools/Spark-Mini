@@ -4,35 +4,30 @@ String getFormattedLink(
     int linkType,
     bool appendTeamNames,
     Map<String, dynamic> orangeVRMLTeamInfo,
-    Map<String, dynamic> blueVRMLTeamInfo) {
+    Map<String, dynamic> blueVRMLTeamInfo,
+    [bool echoTaxiPrefix = false]) {
   sessionid ??= '**********************';
 
   String link = "";
 
+  switch (linkType) {
+    case 0:
+      link = "spark://c/$sessionid";
+      break;
+    case 1:
+      link = "spark://j/$sessionid";
+      break;
+    case 2:
+      link = "spark://s/$sessionid";
+      break;
+  }
+
+  if (echoTaxiPrefix) {
+    link = "https://echo.taxi/$link";
+  }
+
   if (angleBrackets) {
-    switch (linkType) {
-      case 0:
-        link = "<spark://c/$sessionid>";
-        break;
-      case 1:
-        link = "<spark://j/$sessionid>";
-        break;
-      case 2:
-        link = "<spark://s/$sessionid>";
-        break;
-    }
-  } else {
-    switch (linkType) {
-      case 0:
-        link = "spark://c/$sessionid";
-        break;
-      case 1:
-        link = "spark://j/$sessionid";
-        break;
-      case 2:
-        link = "spark://s/$sessionid";
-        break;
-    }
+    link = "<$link>";
   }
 
   if (appendTeamNames) {
