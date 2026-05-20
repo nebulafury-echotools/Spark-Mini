@@ -39,11 +39,21 @@ jobs:
           cd build/ios/ipa
           zip -qry Spark-Mini-unsigned.ipa Payload
 
+      - name: Package source code
+        run: git archive --format=zip --output Spark-Mini-source.zip HEAD
+
       - name: Upload IPA
         uses: actions/upload-artifact@v4
         with:
           name: Spark-Mini-unsigned-iOS-IPA
           path: build/ios/ipa/*.ipa
+          if-no-files-found: error
+
+      - name: Upload source code
+        uses: actions/upload-artifact@v4
+        with:
+          name: Spark-Mini-source-code
+          path: Spark-Mini-source.zip
           if-no-files-found: error
 
       - name: Upload iOS archive logs
