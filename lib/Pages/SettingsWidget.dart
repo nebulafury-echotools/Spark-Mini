@@ -328,6 +328,14 @@ class SettingsWidget extends ConsumerWidget {
           ],
           mainAxisAlignment: MainAxisAlignment.end,
         ),
+        SizedBox(
+          height: 8,
+        ),
+        Text(
+          "Credits: Nebula, NtzFranz, iblowatsports, heisthecat31",
+          textAlign: TextAlign.center,
+          style: Theme.of(context).textTheme.bodySmall,
+        ),
       ]))
     ]);
   }
