@@ -7,16 +7,16 @@ import 'package:searchfield/searchfield.dart';
 import 'package:http/http.dart' as http;
 
 class IgniteStatsWidget extends StatefulWidget {
-  IgniteStatsWidget({Key key}) : super(key: key);
+  IgniteStatsWidget({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => IgniteStatsState();
 }
 
 class IgniteStatsState extends State<IgniteStatsWidget> {
-  IgniteStatsPlayer playerData;
-  Map<String, dynamic> playerDataMap;
-  String playerName;
+  IgniteStatsPlayer? playerData;
+  Map<String, dynamic>? playerDataMap;
+  String? playerName;
   List<String> playerList = ['NtsFranz', 'Far', 'Dual-', 'VTSxKING', 'Wolf_23'];
 
   @override
@@ -116,7 +116,7 @@ class IgniteStatsState extends State<IgniteStatsWidget> {
           } else {
             return Image.network(
                 'https://ignitevr.gg/cgi-bin/EchoStats.cgi/get_playercard/' +
-                    playerName);
+                    playerName!);
           }
         }(),
       ),

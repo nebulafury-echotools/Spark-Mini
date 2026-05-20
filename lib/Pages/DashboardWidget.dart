@@ -14,7 +14,7 @@ import 'package:flutter/services.dart';
 import 'package:latlong2/latlong.dart';
 
 class DashboardWidget extends ConsumerStatefulWidget {
-  const DashboardWidget({Key key}) : super(key: key);
+  const DashboardWidget({Key? key}) : super(key: key);
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => DashboardWidgetState();
@@ -26,7 +26,7 @@ class DashboardWidgetState extends ConsumerState<DashboardWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final APIFrame frame = ref.watch(frameProvider);
+    final APIFrame? frame = ref.watch(frameProvider);
     final bool inGame = ref.watch(inGameProvider);
     final settings = ref.watch(sharedPreferencesProvider);
     final echoVRIP = ref.watch(echoVRIPProvider);
@@ -55,7 +55,7 @@ class DashboardWidgetState extends ConsumerState<DashboardWidget> {
                       )),
                     )
                   ]),
-                  color: Colors.red,
+                          color: Colors.red,
                 );
               } else {
                 return Container();
@@ -731,9 +731,10 @@ class DashboardWidgetState extends ConsumerState<DashboardWidget> {
                       style: ElevatedButton.styleFrom(
                         // primary: Colors.red, // background
                         // onPrimary: Colors.white, // foreground
-                        onPrimary:
+                        foregroundColor:
                             Theme.of(context).colorScheme.onPrimaryContainer,
-                        primary: Theme.of(context).colorScheme.primaryContainer,
+                        backgroundColor:
+                            Theme.of(context).colorScheme.primaryContainer,
                         padding: EdgeInsets.all(20),
                       ),
                     );
@@ -857,7 +858,7 @@ class DashboardWidgetState extends ConsumerState<DashboardWidget> {
         print("SUCCESS: $ip");
         return ip;
       }
-    } on SocketException catch (e) {
+    } on SocketException {
       print("Socket Exception: $ip");
       return "";
     }

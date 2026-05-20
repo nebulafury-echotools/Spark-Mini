@@ -7,7 +7,7 @@ import 'package:spark_mini/main.dart';
 
 import '../Model/APIFrame.dart';
 
-class FrameFetcher extends StateNotifier<APIFrame> {
+class FrameFetcher extends StateNotifier<APIFrame?> {
   FrameFetcher(ref) : super(APIFrame()) {
     // 2. create a timer that fires every second
     _timer = Timer.periodic(const Duration(milliseconds: 1000), (_) async {
@@ -19,7 +19,7 @@ class FrameFetcher extends StateNotifier<APIFrame> {
     });
   }
 
-  Timer _timer;
+  late final Timer _timer;
 
   // 4. cancel the timer when finished
   @override
@@ -28,7 +28,7 @@ class FrameFetcher extends StateNotifier<APIFrame> {
     super.dispose();
   }
 
-  Future<APIFrame> fetchAPI(echoVRIP, echoVRPort) async {
+  Future<APIFrame?> fetchAPI(echoVRIP, echoVRPort) async {
     try {
       final response = await http
           .get(Uri.http('$echoVRIP:$echoVRPort', 'session'))

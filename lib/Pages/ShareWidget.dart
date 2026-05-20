@@ -12,27 +12,27 @@ import '../main.dart';
 
 class ShareWidget extends ConsumerStatefulWidget {
   final String defaultSparkLink;
-  const ShareWidget({Key key, this.defaultSparkLink = ''}) : super(key: key);
+  const ShareWidget({Key? key, this.defaultSparkLink = ''}) : super(key: key);
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => ShareWidgetState();
 }
 
 class ShareWidgetState extends ConsumerState<ShareWidget> {
-  Map<String, dynamic> hostedMatches;
+  Map<String, dynamic>? hostedMatches;
   bool fetching = false;
 
   @override
   void initState() {
     super.initState();
 
-    final APIFrame initFrame = ref.read(frameProvider);
+    final APIFrame? initFrame = ref.read(frameProvider);
     fetchMatches(initFrame?.client_name ?? "_");
   }
 
   @override
   Widget build(BuildContext context) {
-    final APIFrame frame = ref.watch(frameProvider);
+    final APIFrame? frame = ref.watch(frameProvider);
     final bool inGame = ref.watch(inGameProvider);
     final echoVRIP = ref.watch(echoVRIPProvider);
     final echoVRPort = ref.watch(echoVRPortProvider);
@@ -46,7 +46,7 @@ class ShareWidgetState extends ConsumerState<ShareWidget> {
           MatchJoiner(
               inGame: inGame, echoVRIP: echoVRIP, echoVRPort: echoVRPort),
           (() {
-            if (frame?.private_match != null && frame.private_match) {
+            if (frame?.private_match == true) {
               return Container(
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
@@ -57,7 +57,7 @@ class ShareWidgetState extends ConsumerState<ShareWidget> {
                     padding: EdgeInsets.all(24),
                   ),
                   onPressed: (() {
-                    hostMatch(frame, ipLocation);
+                    hostMatch(frame!, ipLocation);
                   }),
                   child: Text('Post Match'),
                 ),
@@ -77,13 +77,12 @@ class ShareWidgetState extends ConsumerState<ShareWidget> {
           }()),
           (() {
             var matches = <dynamic>[];
-            if (hostedMatches != null && hostedMatches.containsKey('matches')) {
-              matches = matches + hostedMatches['matches'];
+            if (hostedMatches != null &&
+                hostedMatches!.containsKey('matches')) {
+              matches = matches + hostedMatches!['matches'];
             }
 
-            if (frame?.private_match != null &&
-                frame.private_match &&
-                matches.length > 0) {
+            if (frame?.private_match == true && matches.length > 0) {
               return Container(
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
@@ -94,7 +93,7 @@ class ShareWidgetState extends ConsumerState<ShareWidget> {
                     padding: EdgeInsets.all(14),
                   ),
                   onPressed: (() {
-                    unhostMatch(frame);
+                    unhostMatch(frame!);
                   }),
                   child: Text('Remove Posted Match'),
                 ),
@@ -113,8 +112,9 @@ class ShareWidgetState extends ConsumerState<ShareWidget> {
           }()),
           (() {
             var matches = <dynamic>[];
-            if (hostedMatches != null && hostedMatches.containsKey('matches')) {
-              matches = matches + hostedMatches['matches'];
+            if (hostedMatches != null &&
+                hostedMatches!.containsKey('matches')) {
+              matches = matches + hostedMatches!['matches'];
             }
 
             if (matches.length > 0) {
@@ -396,7 +396,7 @@ class ShareWidgetState extends ConsumerState<ShareWidget> {
     }
   }
 
-  void hostMatch(APIFrame frame, Map<String, dynamic> ipLocation) async {
+  void hostMatch(APIFrame frame, Map<String, dynamic>? ipLocation) async {
     Map<String, dynamic> data = new Map<String, dynamic>();
     data['matchid'] = frame.sessionid;
     data['username'] = frame.client_name;

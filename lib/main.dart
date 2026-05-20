@@ -115,14 +115,14 @@ final blueTeamVRMLInfoFutureProvider = FutureProvider((ref) async {
 
 // TODO this refreshes every frame
 final inGameProvider = StateProvider((ref) {
-  final APIFrame frame = ref.watch(frameProvider);
+  final APIFrame? frame = ref.watch(frameProvider);
   return frame != null;
 });
 final sessionIPProvider = StateProvider<String>((ref) {
   return ref.watch(frameProvider)?.sessionip ?? "";
 });
 final sparkLinkProvider = StateProvider<String>((ref) {
-  final APIFrame frame = ref.watch(frameProvider);
+  final APIFrame? frame = ref.watch(frameProvider);
   final SharedPreferences prefs = ref.watch(sharedPreferencesProvider);
   final orange = ref.watch(orangeTeamVRMLInfoProvider);
   final blue = ref.watch(blueTeamVRMLInfoProvider);
@@ -163,7 +163,7 @@ final echoVRPortProvider = StateProvider<String>((ref) {
   }
 });
 
-final frameProvider = StateNotifierProvider<FrameFetcher, APIFrame>((ref) {
+final frameProvider = StateNotifierProvider<FrameFetcher, APIFrame?>((ref) {
   return FrameFetcher(ref);
 });
 
@@ -215,11 +215,11 @@ class MyApp extends ConsumerWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title, @required this.restorationId})
+  MyHomePage({Key? key, this.title, required this.restorationId})
       : super(key: key);
 
   final String restorationId;
-  final String title;
+  final String? title;
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -232,7 +232,7 @@ class _MyHomePageState extends State<MyHomePage> with RestorationMixin {
   String get restorationId => widget.restorationId;
 
   @override
-  void restoreState(RestorationBucket oldBucket, bool initialRestore) {
+  void restoreState(RestorationBucket? oldBucket, bool initialRestore) {
     registerForRestoration(_currentPage, 'bottom_navigation_tab_index');
   }
 
@@ -277,7 +277,7 @@ class _MyHomePageState extends State<MyHomePage> with RestorationMixin {
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        title: Text(widget.title ?? ''),
         backgroundColor: Theme.of(context).colorScheme.primaryContainer,
         centerTitle: true,
         toolbarHeight: 40,
@@ -349,12 +349,12 @@ class Settings with ChangeNotifier {
   Future<void> load() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     if (prefs.getInt('atlasLinkStyle') != null)
-      atlasLinkStyle = prefs.getInt('atlasLinkStyle');
+      atlasLinkStyle = prefs.getInt('atlasLinkStyle')!;
     if (prefs.getBool('atlasLinkUseAngleBrackets') != null)
-      atlasLinkUseAngleBrackets = prefs.getBool('atlasLinkUseAngleBrackets');
+      atlasLinkUseAngleBrackets = prefs.getBool('atlasLinkUseAngleBrackets')!;
     if (prefs.getBool('atlasLinkAppendTeamNames') != null)
-      atlasLinkAppendTeamNames = prefs.getBool('atlasLinkAppendTeamNames');
+      atlasLinkAppendTeamNames = prefs.getBool('atlasLinkAppendTeamNames')!;
     if (prefs.getBool('saveReplays') != null)
-      saveReplays = prefs.getBool('saveReplays');
+      saveReplays = prefs.getBool('saveReplays')!;
   }
 }

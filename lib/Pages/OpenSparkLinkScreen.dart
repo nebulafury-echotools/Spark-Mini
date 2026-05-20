@@ -10,8 +10,8 @@ import '../Services/spark_links.dart';
 import '../main.dart';
 
 class OpenSparkLinkScreen extends ConsumerStatefulWidget {
-  final String link;
-  const OpenSparkLinkScreen({Key key, this.link}) : super(key: key);
+  final String? link;
+  const OpenSparkLinkScreen({Key? key, this.link}) : super(key: key);
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
@@ -28,7 +28,7 @@ class OpenSparkLinkScreenState extends ConsumerState<OpenSparkLinkScreen> {
   void initState() {
     super.initState();
 
-    final APIFrame initFrame = ref.read(frameProvider);
+    final APIFrame? initFrame = ref.read(frameProvider);
   }
 
   @override
@@ -41,7 +41,7 @@ class OpenSparkLinkScreenState extends ConsumerState<OpenSparkLinkScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final APIFrame frame = ref.watch(frameProvider);
+    final APIFrame? frame = ref.watch(frameProvider);
     final bool inGame = ref.watch(inGameProvider);
     final echoVRIP = ref.watch(echoVRIPProvider);
     final echoVRPort = ref.watch(echoVRPortProvider);
@@ -195,7 +195,7 @@ class OpenSparkLinkScreenState extends ConsumerState<OpenSparkLinkScreen> {
     );
   }
 
-  Future<void> joinMatch(int teamIdx, String link) async {
+  Future<void> joinMatch(int teamIdx, String? link) async {
     setState(() {
       joiningPage = true;
       joining = true;
@@ -206,12 +206,12 @@ class OpenSparkLinkScreenState extends ConsumerState<OpenSparkLinkScreen> {
         "([A-F0-9]{8}-[A-F0-9]{4}-[A-F0-9]{4}-[A-F0-9]{4}-[A-F0-9]{12})");
 
     // find the first match though you could also do `allMatches`
-    final match = sessionIdRegex.firstMatch(link);
+    final match = sessionIdRegex.firstMatch(link ?? '');
 
     // group(0) is the full matched text
     // if your regex had groups (using parentheses) then you could get the
     // text from them by using group(1), group(2), etc.
-    final String matchedText = match?.group(0); // 25F8
+    final String? matchedText = match?.group(0); // 25F8
 
     if (matchedText == null) {
       errorText = 'Invalid Match Link:\n$link';

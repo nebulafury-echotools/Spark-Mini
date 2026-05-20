@@ -122,7 +122,8 @@ class SettingsWidget extends ConsumerWidget {
                         );
                       }).toList(),
                       onChanged: (value) {
-                        settings.setInt('linkType', linkTypes.indexOf(value));
+                        settings.setInt(
+                            'linkType', linkTypes.indexOf(value ?? linkTypes[0]));
                         ref.refresh(sharedPreferencesProvider);
                       }),
                   SizedBox(
@@ -138,7 +139,7 @@ class SettingsWidget extends ConsumerWidget {
                       ),
                     ),
                     Switch(
-                      value: settings.getBool('linkAngleBrackets'),
+                      value: settings.getBool('linkAngleBrackets') ?? true,
                       onChanged: (bool value) {
                         settings.setBool('linkAngleBrackets', value);
                         ref.refresh(sharedPreferencesProvider);
@@ -159,7 +160,7 @@ class SettingsWidget extends ConsumerWidget {
                       ),
                     ),
                     Switch(
-                      value: settings.getBool('linkAppendTeamNames'),
+                      value: settings.getBool('linkAppendTeamNames') ?? false,
                       onChanged: (bool value) {
                         settings.setBool('linkAppendTeamNames', value);
                         ref.refresh(sharedPreferencesProvider);

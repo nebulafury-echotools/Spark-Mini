@@ -7,7 +7,8 @@ class MatchJoiner extends StatefulWidget {
   final String echoVRIP;
   final String echoVRPort;
 
-  const MatchJoiner({Key key, this.inGame, this.echoVRIP, this.echoVRPort})
+  const MatchJoiner(
+      {Key? key, this.inGame = false, this.echoVRIP = '', this.echoVRPort = ''})
       : super(key: key);
 
   @override
@@ -40,7 +41,7 @@ class MatchJoinerState extends State<MatchJoiner> {
     // group(0) is the full matched text
     // if your regex had groups (using parentheses) then you could get the
     // text from them by using group(1), group(2), etc.
-    final String matchedText = match?.group(0); // 25F8
+    final String? matchedText = match?.group(0); // 25F8
 
     if (matchedText == null) {
       final snackBar = SnackBar(
@@ -102,7 +103,7 @@ class MatchJoinerState extends State<MatchJoiner> {
                   TextButton(
                     child: const Text('JOIN MATCH'),
                     style: TextButton.styleFrom(
-                      primary: Theme.of(context).colorScheme.primary,
+                      foregroundColor: Theme.of(context).colorScheme.primary,
                       padding: EdgeInsets.all(20),
                     ),
                     onPressed: () async {

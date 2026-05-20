@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 import '../main.dart';
 
 class DebugPage extends StatefulWidget {
-  const DebugPage({Key key}) : super(key: key);
+  const DebugPage({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => DebugPageState();

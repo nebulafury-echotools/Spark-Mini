@@ -6,7 +6,7 @@ import '../Model/APIFrame.dart';
 import '../main.dart';
 
 class MatchRulesPage extends ConsumerStatefulWidget {
-  const MatchRulesPage({Key key}) : super(key: key);
+  const MatchRulesPage({Key? key}) : super(key: key);
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => MatchRulesPageState();
